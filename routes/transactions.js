@@ -23,8 +23,9 @@ const transaction = req.body
             }else{
                 balanceUpdate = { $inc: { balance: +transaction.amount } }
             }
-            
-        await balanceModel.findOneAndUpdate(balancefilter, balanceUpdate )
+
+        const response = await balanceModel.findOneAndUpdate(balancefilter, balanceUpdate )
+                console.log(response)
     }
     handleBalanceChange()
     
