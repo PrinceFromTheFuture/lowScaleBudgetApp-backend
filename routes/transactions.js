@@ -14,15 +14,17 @@ router.post('/new', async (req,res)=>{
 const transaction = req.body
     const response = await transactionModel.create(transaction)
     
+    console.log(transaction)
     const handleBalanceChange = async()=> {
 
-        const balancefilter = { title: transaction.balance}
+        const balancefilter = { title: transaction.target}
         let balanceUpdate;
-            if(transaction.type == 'outcome'){
-              balanceUpdate = { $inc: { balance: -transaction.amount } }
-            }else{
-                balanceUpdate = { $inc: { balance: +transaction.amount } }
-            }
+        if(transaction.type == 'outcome'){
+            balanceUpdate = { $inc: { balance: -transaction.amount } }
+        }else{
+            balanceUpdate = { $inc: { balance: +transaction.amount } }
+        }
+        console.log(balanceUpdate)
 
         const response = await balanceModel.findOneAndUpdate(balancefilter, balanceUpdate )
                 console.log(response)
